@@ -1,15 +1,8 @@
-@"
 name: CD - Deploy to Hugging Face Space
 
 on:
   push:
-    branches: [ main ]
-    paths:
-      - App/**
-      - Model/**
-      - Results/**
-      - requirements.txt
-      - .github/workflows/cd.yml
+    branches: [ "main" ]
 
 jobs:
   deploy:
@@ -19,7 +12,7 @@ jobs:
 
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: "3.11"
 
       - name: Install HF CLI
         run: |
@@ -29,12 +22,10 @@ jobs:
       - name: Login to HF
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
-        run: |
-          huggingface-cli login --token "$HF_TOKEN" --add-to-git-credential
+        run: huggingface-cli login --token "$HF_TOKEN" --add-to-git-credential
 
       - name: Upload to Space
         run: |
           huggingface-cli upload laurilla1207/Drug-Classification ./App --repo-type=space --commit-message "Sync App"
           huggingface-cli upload laurilla1207/Drug-Classification ./Model /Model --repo-type=space --commit-message "Sync Model"
           huggingface-cli upload laurilla1207/Drug-Classification ./Results /Metrics --repo-type=space --commit-message "Sync Metrics"
-"@ | Set-Content -Encoding utf8 .github/workflows/cd.yml
