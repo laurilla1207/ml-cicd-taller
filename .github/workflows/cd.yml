@@ -26,6 +26,8 @@ jobs:
 
       - name: Upload to Space
         run: |
+          huggingface-cli upload laurilla1207/Drug-Classification ./requirements.txt /requirements.txt --repo-type=space --commit-message "Sync requirements"
           huggingface-cli upload laurilla1207/Drug-Classification ./App --repo-type=space --commit-message "Sync App"
           huggingface-cli upload laurilla1207/Drug-Classification ./Model /Model --repo-type=space --commit-message "Sync Model"
           huggingface-cli upload laurilla1207/Drug-Classification ./Results /Metrics --repo-type=space --commit-message "Sync Metrics"
+
