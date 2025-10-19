@@ -1,0 +1,42 @@
+name: CI - Train, Evaluate & CML
+
+on:
+  pull_request:
+  push:
+    branches: [ "**" ]
+
+jobs:
+  ci-cml:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install deps
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Train & Evaluate
+        run: |
+          python train.py
+          python evaluate.py
+
+      - name: Setup CML
+        uses: iterative/setup-cml@v2
+
+      - name: Post CML report
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "## Model Metrics" > report.md
+          cat ./Results/metrics.txt >> report.md
+          echo "\n## Confusion Matrix Plot" >> report.md
+          echo "![Confusion Matrix](./Results/model_results.png)" >> report.md
+          cml comment create report.md
