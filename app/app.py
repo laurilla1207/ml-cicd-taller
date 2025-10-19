@@ -1,5 +1,8 @@
+@"
+# -*- coding: utf-8 -*-
 import gradio as gr, joblib, numpy as np
 from pathlib import Path
+
 MODEL = Path(__file__).resolve().parents[1]/'Model'/'model.joblib'
 pipe = joblib.load(MODEL)['pipeline'] if MODEL.exists() else None
 
@@ -15,5 +18,7 @@ def predict(csv_text: str):
 
 demo = gr.Interface(fn=predict, inputs='text', outputs='text',
                     title='Drug/Cancer Classification')
+
 if __name__ == '__main__':
     demo.launch()
+"@ | Set-Content -Encoding utf8 App/app.py

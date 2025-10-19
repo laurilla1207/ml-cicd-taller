@@ -1,2 +1,2 @@
 # ML CI/CD Taller
-**Nombre y grupo:** Laura Mateus — Grupo 0
+**Nombre y grupo:** Laura Mateus, Daniel Perez, Felipe Sainea ï¿½ Grupo 10
