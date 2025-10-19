@@ -4,7 +4,7 @@ import numpy as np
 from pathlib import Path
 
 # Carga el modelo desde /Model/model.joblib (repositorio del Space)
-MODEL = Path(__file__).resolve().parents[1] / "Model" / "model.joblib"
+MODEL  = Path(__file__).resolve().parent / "Model" / "model.joblib"
 
 def load_model():
     if MODEL.exists():
